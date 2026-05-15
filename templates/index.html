@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>SpeedRunners - Sistema Blindado</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <style>
+        body { font-family: sans-serif; background-color: #f0f2f5; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; max-width: 400px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        input, select, button { width: 100%; padding: 10px; margin-bottom: 10px; box-sizing: border-box; }
+        button { background-color: #0033a0; color: white; border: none; font-weight: bold; cursor: pointer; }
+        pre { background: #eee; padding: 10px; font-size: 12px; overflow-x: auto; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h2>Cadastro Seguro</h2>
+        <input type="text" id="token" placeholder="Insira o JWT (Bearer Token)" />
+        <input type="email" id="email" placeholder="E-mail" value="cliente@ford.com"/>
+        <select id="marca">
+            <option value="FORD">FORD</option>
+            <option value="FIAT">FIAT (Bloqueado)</option>
+        </select>
+        <select id="modelo">
+            <option value="RANGER">RANGER</option>
+            <option value="BRONCO">BRONCO</option>
+        </select>
+        <input type="text" id="versao" placeholder="Versão" value="Raptor 4x4"/>
+        <button onclick="enviarLead()">Registrar Lead</button>
+        <pre id="resposta">Aguardando envio...</pre>
+    </div>
+
+    <script>
+        async function enviarLead() {
+            const token = document.getElementById('token').value;
+            const idempotencyKey = "REQ-" + new Date().getTime(); 
+            
+            // 1. Monta o Payload exatamente como vai para o servidor
+            const payloadData = {
+                email: document.getElementById('email').value,
+                marca: document.getElementById('marca').value,
+                modelo: document.getElementById('modelo').value,
+                versao: document.getElementById('versao').value,
+                idempotency_key: idempotencyKey
+            };
+            
+            const payloadString = JSON.stringify(payloadData);
+
+            // 2. Cria a Assinatura HMAC-SHA256 (Garantia de Integridade)
+            // IMPORTANTE: Esta chave DEVE ser exatamente a mesma SECRET_KEY que você configurou no terminal (export SECRET_KEY=...)
+            const secretKeyClient = "SuaChaveSecretaParaOJWT"; 
+            const assinaturaHmac = CryptoJS.HmacSHA256(payloadString, secretKeyClient).toString(CryptoJS.enc.Hex);
+
+            try {
+                // Ajuste a URL para http ou https dependendo de como está o final do seu app.py
+                const response = await fetch('/api/lead', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`,
+                        'X-Payload-Signature': assinaturaHmac // Enviando a assinatura pro Backend conferir
+                    },
+                    body: payloadString
+                });
+
+                const result = await response.json();
+                document.getElementById('resposta').innerText = JSON.stringify(result, null, 2);
+            } catch (error) {
+                document.getElementById('resposta').innerText = "Erro de conexão. Verifique CORS ou o certificado SSL.";
+            }
+        }
+    </script>
+</body>
+</html>

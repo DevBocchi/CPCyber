@@ -7,6 +7,12 @@
  Marcos Vinicius da Silva Costa - RM555490
  Rafael Federici de Oliveira - RM554736
 
+
+<img src="/home/boki/vscode/Cyber1.png" alt="Texto alternativo" width="500">
+ 
+ <img src="/home/boki/vscode/Cyber2.png" alt="Texto alternativo" width="500">
+
+
 # 🛡️ Ford Leads Security API - Challenge SpeedRunners
 
 Este projeto é uma API de alta segurança desenvolvida em Python/Flask, projetada para gerenciar o fluxo de leads com foco total em blindagem digital. A aplicação implementa todos os requisitos técnicos do desafio **SpeedRunners**, garantindo a integridade, confidencialidade e disponibilidade dos dados, ideal para compor um portfólio robusto de um Desenvolvedor Full Stack Júnior.

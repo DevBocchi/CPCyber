@@ -10,7 +10,7 @@
 
 <img src="./imagens/Cyber1.png" alt="Texto alternativo" width="500">
  
-<img src="./imagens/Cyber2.png" alt="Texto alternativo" width="500">
+ <img src="/home/boki/vscode/Cyber2.png" alt="Texto alternativo" width="500">
 
 
 # 🛡️ Ford Leads Security API - Challenge SpeedRunners

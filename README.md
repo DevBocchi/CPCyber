@@ -8,9 +8,9 @@
  Rafael Federici de Oliveira - RM554736
 
 
-<img src="/home/boki/vscode/Cyber1.png" alt="Texto alternativo" width="500">
+<img src="/home/boki/vscode/imagens/Cyber1.png" alt="Texto alternativo" width="500">
  
- <img src="/home/boki/vscode/Cyber2.png" alt="Texto alternativo" width="500">
+ <img src="/home/boki/vscode/imagens/Cyber1.png" alt="Texto alternativo" width="500">
 
 
 # 🛡️ Ford Leads Security API - Challenge SpeedRunners
